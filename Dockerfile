@@ -14,6 +14,8 @@ RUN pip install flask
 
 RUN pip install apscheduler
 
+RUN echo 'Europe/London' >  /etc/timezone
+
 ENTRYPOINT ["python"]
 
 EXPOSE 5080
