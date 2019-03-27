@@ -1,0 +1,41 @@
+---
+# Docker setup tasks
+- name: Setup Docker
+  block:
+  - notify: docker_stop
+  - name: Copy docker config
+    copy:
+      content: >
+        STORAGE_DRIVER=overlay2
+        WIPE_SIGNATURES=true
+        DEVS={{  docker_device }}
+        VG=datavg
+        CONTAINER_ROOT_LV_NAME=datalv
+        CONTAINER_ROOT_LV_SIZE=100%FREE
+        CONTAINER_ROOT_LV_MOUNT_PATH=/var/lib/docker
+      dest: /etc/sysconfig/docker-storage-setup
+      owner: root
+      group: root
+      mode: 0664
+  - name: Manage registries
+    blockinfile:
+      path: /etc/sysconfig/docker
+      backup: yes
+      state: present
+      block: |
+        INSECURE_REGISTRY='--insecure-registry 172.17.0.0/16'
+  - name: Setup mount point for Docker
+    mount:
+      path: /var/lib/docker
+      state: present
+      src: /dev/sda
+      fstype: xfs
+
+  - name: Register container storage
+    command: container-storage-setup
+    register: setup_output
+  - name: Debug setup_output
+    debug: var=setup_output
+  - name: Start docker
+    notify: docker_started
+
