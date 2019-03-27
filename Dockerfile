@@ -18,4 +18,4 @@ ENTRYPOINT ["python"]
 
 EXPOSE 5080
 
-CMD [ "hello-wrld.py" ]
+CMD [ "hello-wrld.py /mnt/tst/test.txt" ]
