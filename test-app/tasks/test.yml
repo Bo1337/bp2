@@ -1,0 +1,12 @@
+---
+- name: Create project
+  oc:
+    state: present
+    validate_certs: False
+    inline:
+      kind: ProjectRequest
+      metadata:
+        name: ansibletestproject
+      displayName: Ansible Test Project
+      description: This project was created using Ansible
+    token: fM3nSSLvAaw-csseeZsRH7kPYrKU1V8zN0tHsKVCe74

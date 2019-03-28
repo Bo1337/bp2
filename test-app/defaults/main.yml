@@ -1,0 +1,5 @@
+---
+# defaults file for test-app
+
+ansible_connection: local
+validate_certs: False
