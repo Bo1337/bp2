@@ -8,7 +8,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask
 app = Flask(__name__)
 
-if len(sys.argv[1]) >= 2:
+if len(sys.argv) >= 2:
     fileName = sys.argv[1]
 else:
     fileName = "/tmp/test.txt"
